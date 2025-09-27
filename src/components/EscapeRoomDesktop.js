@@ -29,7 +29,7 @@ import useFullscreen from "../hooks/useFullscreen";
  * public/sim/files/company-policy.pdf
  */
 
-const WALLPAPER = "bg-gradient-to-br from-blue-400 via-yellow-400 to-green-500";
+const WALLPAPER = "bg-gradient-to-r from-cyan-500 to-indigo-800";
 
 /* Simple Windows logo */
 function WindowsLogo({ className = "w-7 h-7" }) {
