@@ -328,9 +328,9 @@ function BrowserApp() {
       path: `${process.env.PUBLIC_URL}/sim/files/cyber-article.html`,
     },
     {
-      id: "China",
-      title: "Tickets to Shanghai",
-      path: `${process.env.PUBLIC_URL}/sim/files/shanghai.html`,
+      id: "Vendor",
+      title: "CoreFav Vendor Portal",
+      path: `${process.env.PUBLIC_URL}/sim/files/vendor_portal.html`,
     },
     {
       id: "Silly",
