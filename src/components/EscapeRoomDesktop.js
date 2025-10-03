@@ -270,8 +270,8 @@ function MailApp() {
     {
       id: 5,
       subject: "Concerning Behavior",
-      from: "employee@company.com",
-      to: "ared@northbridge.example",
+      from: "greg.jones@company.com",
+      to: "marcus.reed@company.com",
       path: `${process.env.PUBLIC_URL}/sim/files/supervisor_concern.html`,
     },
   ];
