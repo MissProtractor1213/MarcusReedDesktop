@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>lab_results.csv — Preview</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root{
+      --bg:#0b1220; --panel:#0f1724; --card:#091325; --muted:#9fb0c8;
+      --accent:#06b6d4; --pass:#10b981; --fail:#ef4444; --warn:#f59e0b;
+    }
+    body{font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;background:linear-gradient(180deg,#061022 0%, #071025 60%);color:#eaf6ff;margin:0;padding:28px}
+    .wrap{max-width:1200px;margin:0 auto}
+    header{display:flex;align-items:center;gap:12px}
+    .file-icon{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,#06b6d4,#7c3aed);display:flex;align-items:center;justify-content:center;font-weight:800}
+    h1{margin:0;font-size:18px}
+    .meta{margin-left:auto;text-align:right;color:var(--muted);font-size:12px}
+    .grid{display:grid;grid-template-columns:1fr 340px;gap:14px;margin-top:16px}
+    .panel{background:var(--panel);padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04)}
+    .controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+    input[type="search"], select{background:#0b1228;border:1px solid rgba(255,255,255,0.06);border-radius:8px;color:#e6f7ff;padding:8px 10px;font-size:13px}
+    .btn{background:linear-gradient(180deg,#0b1228,#061021);border:1px solid rgba(255,255,255,0.06);border-radius:8px;color:#e6f7ff;padding:8px 10px;font-size:13px;cursor:pointer}
+    table{width:100%;border-collapse:collapse;font-size:13px}
+    thead th{position:sticky;top:0;background:linear-gradient(180deg,rgba(10,14,20,0.95),rgba(7,9,14,0.9));padding:8px 10px;text-align:left;color:#cde8f5;border-bottom:1px solid rgba(255,255,255,0.06);cursor:pointer;user-select:none}
+    tbody td{padding:8px 10px;border-bottom:1px dashed rgba(255,255,255,0.05)}
+    tbody tr:hover td{background:rgba(255,255,255,0.02)}
+    .badge{padding:2px 8px;border-radius:999px;font-weight:700;font-size:11px}
+    .pass{background:rgba(16,185,129,0.16);color:#bbf7d0}
+    .fail{background:rgba(239,68,68,0.18);color:#fecaca}
+    .warn{background:rgba(245,158,11,0.18);color:#fde68a}
+    .side{display:flex;flex-direction:column;gap:10px}
+    .side .panel h3{margin:0 0 8px;font-size:14px}
+    .kv{display:flex;justify-content:space-between;color:var(--muted);font-size:13px;padding:6px 0}
+    .preview{white-space:pre-wrap;background:rgba(255,255,255,0.03);border-radius:8px;padding:10px;height:170px;overflow:auto;font-size:13px}
+    .raw{white-space:pre;overflow:auto;background:#020617;border-radius:8px;border:1px solid rgba(255,255,255,0.06);padding:10px;height:180px}
+    @media (max-width:980px){ .grid{grid-template-columns:1fr} .meta{display:none} }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="file-icon">CSV</div>
+      <div>
+        <h1>lab_results.csv</h1>
+        <div style="color:var(--muted);font-size:12px">Assay results — QA bench (temp/pressure/film QC)</div>
+      </div>
+      <div class="meta">
+        <div>Rows: <strong id="row-count">0</strong></div>
+        <div>Size: <strong>~28 KB</strong></div>
+        <div>Modified: <strong>Sep 30, 2025 08:12 CDT</strong></div>
+      </div>
+    </header>
+
+    <div class="grid" role="region" aria-label="CSV preview area">
+      <section class="panel">
+        <div class="controls">
+          <input type="search" id="search" placeholder="Search Sample ID, Lot, Test, Tech…" />
+          <select id="status">
+            <option value="">All statuses</option>
+            <option value="PASS">PASS</option>
+            <option value="FAIL">FAIL</option>
+            <option value="WARN">WARN</option>
+          </select>
+          <button class="btn" id="clear">Clear</button>
+          <div style="margin-left:auto;display:flex;gap:8px">
+            <button class="btn" id="download">Download CSV (sim)</button>
+            <button class="btn" id="copy">Copy visible rows</button>
+          </div>
+        </div>
+
+        <div style="overflow:auto;border-radius:8px;border:1px solid rgba(255,255,255,0.05)">
+          <table id="table" aria-label="lab_results.csv">
+            <thead>
+              <tr>
+                <th data-key="SampleID">SampleID</th>
+                <th data-key="Lot">Lot</th>
+                <th data-key="Test">Test</th>
+                <th data-key="Result">Result</th>
+                <th data-key="Units">Units</th>
+                <th data-key="RefLow">RefLow</th>
+                <th data-key="RefHigh">RefHigh</th>
+                <th data-key="Status">Status</th>
+                <th data-key="Timestamp">Timestamp</th>
+                <th data-key="Technician">Technician</th>
+              </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <aside class="side">
+        <div class="panel">
+          <h3>Quick stats</h3>
+          <div class="kv"><div>PASS</div><div><strong id="st-pass">0</strong></div></div>
+          <div class="kv"><div>FAIL</div><div><strong id="st-fail">0</strong></div></div>
+          <div class="kv"><div>WARN</div><div><strong id="st-warn">0</strong></div></div>
+          <div class="kv"><div>Fail rate</div><div><strong id="st-failrate">0%</strong></div></div>
+        </div>
+
+        <div class="panel">
+          <h3>Row preview</h3>
+          <div class="preview" id="preview">Click a row to preview its values.</div>
+        </div>
+
+        <div class="panel">
+          <h3>Raw CSV (visible subset)</h3>
+          <div class="raw" id="rawcsv">—</div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    // --- Demo data (synthetic) ---
+    const DATA = [
+      {SampleID:"AA-101",Lot:"L-204",Test:"Thickness",Result:120.4,Units:"nm",RefLow:118,RefHigh:123,Status:"PASS",Timestamp:"2025-09-30 07:12",Technician:"J. Morales"},
+      {SampleID:"AA-102",Lot:"L-204",Test:"Thickness",Result:119.9,Units:"nm",RefLow:118,RefHigh:123,Status:"PASS",Timestamp:"2025-09-30 07:18",Technician:"J. Morales"},
+      {SampleID:"AB-201",Lot:"L-210",Test:"Thickness",Result:118.2,Units:"nm",RefLow:118,RefHigh:123,Status:"PASS",Timestamp:"2025-09-30 07:40",Technician:"S. Patel"},
+      {SampleID:"AB-202",Lot:"L-210",Test:"Thickness",Result:117.4,Units:"nm",RefLow:118,RefHigh:123,Status:"FAIL",Timestamp:"2025-09-30 07:46",Technician:"S. Patel"},
+      {SampleID:"AC-303",Lot:"L-215",Test:"Temp",Result:206.2,Units:"°C",RefLow:195,RefHigh:205,Status:"WARN",Timestamp:"2025-09-30 08:02",Technician:"M. Orozco"},
+      {SampleID:"AC-304",Lot:"L-215",Test:"Temp",Result:204.9,Units:"°C",RefLow:195,RefHigh:205,Status:"PASS",Timestamp:"2025-09-30 08:08",Technician:"M. Orozco"},
+      {SampleID:"AD-401",Lot:"L-220",Test:"Adhesion",Result:4.9,Units:"N/m",RefLow:4.5,RefHigh:6.0,Status:"PASS",Timestamp:"2025-09-30 08:20",Technician:"H. Nguyen"},
+      {SampleID:"AD-402",Lot:"L-220",Test:"Adhesion",Result:4.3,Units:"N/m",RefLow:4.5,RefHigh:6.0,Status:"FAIL",Timestamp:"2025-09-30 08:28",Technician:"H. Nguyen"},
+      {SampleID:"AE-501",Lot:"L-230",Test:"Pressure",Result:1.05,Units:"Torr",RefLow:0.90,RefHigh:1.10,Status:"PASS",Timestamp:"2025-09-30 08:41",Technician:"K. Lee"},
+      {SampleID:"AE-502",Lot:"L-230",Test:"Pressure",Result:1.16,Units:"Torr",RefLow:0.90,RefHigh:1.10,Status:"WARN",Timestamp:"2025-09-30 08:47",Technician:"K. Lee"},
+      {SampleID:"AF-601",Lot:"L-235",Test:"Thickness",Result:121.6,Units:"nm",RefLow:118,RefHigh:123,Status:"PASS",Timestamp:"2025-09-30 09:05",Technician:"D. Okafor"},
+      {SampleID:"AF-602",Lot:"L-235",Test:"Thickness",Result:122.9,Units:"nm",RefLow:118,RefHigh:123,Status:"PASS",Timestamp:"2025-09-30 09:11",Technician:"D. Okafor"},
+      {SampleID:"AG-701",Lot:"L-238",Test:"Temp",Result:189.6,Units:"°C",RefLow:190,RefHigh:210,Status:"FAIL",Timestamp:"2025-09-30 09:20",Technician:"C. Mendez"},
+      {SampleID:"AG-702",Lot:"L-238",Test:"Temp",Result:190.2,Units:"°C",RefLow:190,RefHigh:210,Status:"PASS",Timestamp:"2025-09-30 09:27",Technician:"C. Mendez"},
+      {SampleID:"AH-801",Lot:"L-242",Test:"Adhesion",Result:5.8,Units:"N/m",RefLow:4.5,RefHigh:6.0,Status:"PASS",Timestamp:"2025-09-30 09:44",Technician:"S. Li"}
+    ];
+
+    // --- State ---
+    let sortKey = null, sortAsc = true;
+
+    // --- Helpers ---
+    const fmt = v => (typeof v === 'number' ? String(v) : v);
+    const toCSV = rows => {
+      const headers = Object.keys(DATA[0]);
+      const lines = [headers.join(',')].concat(rows.map(r => headers.map(h => String(r[h])).join(',')));
+      return lines.join('\n');
+    };
+    const badgeClass = (s) => s === 'PASS' ? 'badge pass' : s === 'FAIL' ? 'badge fail' : 'badge warn';
+
+    // --- Render table ---
+    function render() {
+      const q = document.getElementById('search').value.trim().toLowerCase();
+      const st = document.getElementById('status').value;
+
+      let rows = DATA.filter(r=>{
+        const hay = (r.SampleID+' '+r.Lot+' '+r.Test+' '+r.Technician).toLowerCase();
+        const matchQ = !q || hay.includes(q);
+        const matchS = !st || r.Status === st;
+        return matchQ && matchS;
+      });
+
+      if (sortKey){
+        rows.sort((a,b)=>{
+          const va=a[sortKey], vb=b[sortKey];
+          if (typeof va === 'number' && typeof vb === 'number') return sortAsc ? va - vb : vb - va;
+          return sortAsc ? String(va).localeCompare(String(vb)) : String(vb).localeCompare(String(va));
+        });
+      }
+
+      const tb = document.getElementById('tbody');
+      tb.innerHTML = '';
+      rows.forEach(r=>{
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${fmt(r.SampleID)}</td>
+          <td>${fmt(r.Lot)}</td>
+          <td>${fmt(r.Test)}</td>
+          <td>${fmt(r.Result)}</td>
+          <td>${fmt(r.Units)}</td>
+          <td>${fmt(r.RefLow)}</td>
+          <td>${fmt(r.RefHigh)}</td>
+          <td><span class="${badgeClass(r.Status)}">${r.Status}</span></td>
+          <td>${fmt(r.Timestamp)}</td>
+          <td>${fmt(r.Technician)}</td>`;
+        tr.addEventListener('click', ()=>showPreview(r));
+        tb.appendChild(tr);
+      });
+
+      // Stats
+      document.getElementById('row-count').textContent = rows.length;
+      const cPass = rows.filter(r=>r.Status==='PASS').length;
+      const cFail = rows.filter(r=>r.Status==='FAIL').length;
+      const cWarn = rows.filter(r=>r.Status==='WARN').length;
+      document.getElementById('st-pass').textContent = cPass;
+      document.getElementById('st-fail').textContent = cFail;
+      document.getElementById('st-warn').textContent = cWarn;
+      document.getElementById('st-failrate').textContent = rows.length ? ((cFail/rows.length)*100).toFixed(1)+'%' : '0%';
+
+      // Raw CSV (visible subset)
+      document.getElementById('rawcsv').textContent = toCSV(rows);
+    }
+
+    function showPreview(r){
+      document.getElementById('preview').textContent =
+`Row preview — lab_results.csv
+
+SampleID:  ${r.SampleID}
+Lot:       ${r.Lot}
+Test:      ${r.Test}
+Result:    ${r.Result} ${r.Units} (Ref: ${r.RefLow}–${r.RefHigh})
+Status:    ${r.Status}
+Timestamp: ${r.Timestamp}
+Tech:      ${r.Technician}
+
+Notes:
+- WARN indicates borderline outside nominal but within engineering allowance.
+- FAIL requires retest and supervisor sign-off.`;
+    }
+
+    // --- Events ---
+    document.getElementById('search').addEventListener('input', render);
+    document.getElementById('status').addEventListener('change', render);
+    document.getElementById('clear').addEventListener('click', ()=>{
+      document.getElementById('search').value='';
+      document.getElementById('status').value='';
+      render();
+    });
+
+    // Sort on header click
+    document.querySelectorAll('#table thead th').forEach(th=>{
+      th.addEventListener('click', ()=>{
+        const key = th.getAttribute('data-key');
+        if (!key) return;
+        if (sortKey === key) sortAsc = !sortAsc; else { sortKey = key; sortAsc = true; }
+        render();
+      });
+    });
+
+    // Simulated CSV download (full dataset)
+    document.getElementById('download').addEventListener('click', ()=>{
+      const csv = toCSV(DATA);
+      const blob = new Blob([csv], {type:'text/csv'});
+      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'lab_results.csv'; document.body.appendChild(a); a.click(); a.remove();
+    });
+
+    // Copy visible rows to clipboard
+    document.getElementById('copy').addEventListener('click', async ()=>{
+      const txt = document.getElementById('rawcsv').textContent || '';
+      try { await navigator.clipboard.writeText(txt); alert('Visible rows copied to clipboard.'); }
+      catch { alert('Copy failed — select the text manually from "Raw CSV".'); }
+    });
+
+    // Initial render
+    render();
+  </script>
+</body>
+</html>
