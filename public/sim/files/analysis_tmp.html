@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>bench_backup.zip — Archive Browser</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root{
+      --bg:#0f172a; --card:#0b1220; --muted:#9aa4bf; --accent:#7c3aed;
+      --table-head:#111827; --glass:rgba(255,255,255,0.03);
+    }
+    body{font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;background:linear-gradient(180deg,#071029 0%, #0f172a 60%);color:#e6eef8;margin:0;padding:28px;}
+    .container{max-width:1100px;margin:0 auto;}
+    header{display:flex;align-items:center;gap:16px;margin-bottom:18px}
+    .zip-icon{width:62px;height:62px;border-radius:8px;background:linear-gradient(135deg,#0ea5a4,#7c3aed);display:flex;align-items:center;justify-content:center;font-weight:700;color:white;font-size:20px;box-shadow:0 6px 18px rgba(124,58,237,0.18)}
+    h1{font-size:20px;margin:0}
+    p.lead{color:var(--muted);margin:4px 0 0;font-size:13px}
+    .meta{margin-left:auto;text-align:right;color:var(--muted);font-size:13px}
+    .card{background:var(--card);border-radius:10px;padding:14px;box-shadow:0 6px 20px rgba(2,6,23,0.6);margin-top:18px;display:grid;grid-template-columns:1fr 420px;gap:14px}
+    .sidebar{background:var(--glass);padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.03)}
+    table{width:100%;border-collapse:collapse;font-size:13px}
+    thead th{background:var(--table-head);text-align:left;padding:10px;border-radius:6px 6px 0 0;font-weight:600;color:#cbd5e1}
+    tbody tr{border-bottom:1px dashed rgba(255,255,255,0.03)}
+    tbody td{padding:10px;vertical-align:middle}
+    .fname{cursor:pointer;color:#dbeafe}
+    .fname.small{font-size:12px;color:var(--muted)}
+    .type{font-size:12px;color:var(--muted)}
+    .size{font-family:monospace;color:#cbd5e1}
+    .preview{background:#020617;border-radius:8px;padding:12px;height:420px;overflow:auto;border:1px solid rgba(255,255,255,0.02)}
+    .preview h3{margin:0 0 8px;font-size:15px}
+    .preview pre{white-space:pre-wrap;word-wrap:break-word;font-size:13px;color:#cbd5e1;background:transparent;border-radius:6px;padding:8px}
+    .footer{margin-top:10px;color:var(--muted);font-size:12px;display:flex;gap:8px;align-items:center}
+    .actions{display:flex;gap:8px}
+    .btn{background:linear-gradient(90deg,#1f2937, #111827);color:#e6eef8;padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);cursor:pointer;font-size:13px}
+    .small-muted{color:var(--muted);font-size:12px}
+    .folder{font-weight:600;color:#ffd89b}
+    .tag{background:rgba(124,58,237,0.12);color:#e9d5ff;padding:4px 8px;border-radius:999px;font-size:11px}
+    .checksum{font-family:monospace;font-size:12px;color:#94a3b8}
+    @media (max-width:1000px){
+      .card{grid-template-columns:1fr; }
+      .meta{display:none}
+      .preview{height:360px}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="zip-icon">ZIP</div>
+      <div>
+        <h1>bench_backup.zip</h1>
+        <p class="lead">Compressed backup created from: <strong>/mnt/bench/</strong> — typical process engineer bench data (recipes, logs, calibrations)</p>
+      </div>
+      <div class="meta">
+        <div>Archive size: <strong>2.18 GB</strong></div>
+        <div class="small-muted">Created: <strong>Aug 14, 2025 09:12:43 CDT</strong></div>
+        <div style="margin-top:6px"><span class="checksum">SHA1: b7f3c9a1f6e8a2d4c63fa2b3c5a8e1d9f0c12345</span></div>
+      </div>
+    </header>
+
+    <div class="card" role="region" aria-label="Archive explorer">
+      <div class="sidebar" id="file-list">
+        <table aria-hidden="false">
+          <thead>
+            <tr><th>File / Folder</th><th style="width:92px">Type</th><th style="width:110px">Size</th><th style="width:140px">Last modified</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="fname" data-path="readme.txt">readme.txt</td>
+              <td class="type">TXT</td>
+              <td class="size">1.1 KB</td>
+              <td class="small-muted">2025-08-14 09:12</td>
+            </tr>
+            <tr>
+              <td class="fname folder" data-path="recipes/">recipes/</td>
+              <td class="type">DIR</td>
+              <td class="size">—</td>
+              <td class="small-muted">2025-08-14 08:59</td>
+            </tr>
+            <tr>
+              <td class="fname" data-path="recipes/recipe_A_v3.2.proc">recipes/recipe_A_v3.2.proc</td>
+              <td class="type">PROC</td>
+              <td class="size">82 KB</td>
+              <td class="small-muted">2025-06-01 10:04</td>
+            </tr>
+            <tr>
+              <td class="fname" data-path="recipes/recipe_B_v1.9.proc">recipes/recipe_B_v1.9.proc</td>
+              <td class="type">PROC</td>
+              <td class="size">76 KB</td>
+              <td class="small-muted">2025-05-18 14:32</td>
+            </tr>
+            <tr>
+              <td class="fname folder" data-path="equipment_logs/">equipment_logs/</td>
+              <td class="type">DIR</td>
+              <td class="size">—</td>
+              <td class="small-muted">2025-08-14 08:55</td>
+            </tr>
+            <tr>
+              <td class="fname" data-path="equipment_logs/oven_01_2025-08-13.log">equipment_logs/oven_01_2025-08-13.log</td>
+              <td class="type">LOG</td>
+              <td class="size">520 KB</td>
+              <td class="small-muted">2025-08-13 18:02</td>
+            </tr>
+            <tr>
+              <td class="fname" data-path="equipment_logs/chiller_maintenance_2025-07-02.csv">equipment_logs/chiller_maintenance_2025-07-02.csv</td>
+              <td class="type">CSV</td>
+              <td class="size">24 KB</td>
+              <td class="small-muted">2025-07-02 09:20</td>
+            </tr>
+            <tr>
+              <td class="fname" data-path="calibration/calib_2025-08-01.xlsx">calibration/calib_2025-08-01.xlsx</td>
+              <td class="type">XLSX</td>
+              <td class="size">134 KB</td>
+              <td class="small-muted">2025-08-01 07:44</td>
+            </tr>
+            <tr>
+              <td class="fname" data-path="batch_reports/">batch_reports/</td>
+              <td class="type">DIR</td>
+              <td class="size">—</td>
+              <td class="small-muted">2025-08-13 19:03</td>
+            </tr>
+            <tr>
+              <td class="fname" data-path="batch_reports/BR-2025-0813-01.pdf">batch_reports/BR-2025-0813-01.pdf</td>
+              <td class="type">PDF</td>
+              <td class="size">430 KB</td>
+              <td class="small-muted">2025-08-13 19:01</td>
+            </tr>
+            <tr>
+              <td class="fname" data-path="photos/bench_before_08132025.jpg">photos/bench_before_08132025.jpg</td>
+              <td class="type">JPG</td>
+              <td class="size">2.1 MB</td>
+              <td class="small-muted">2025-08-13 08:15</td>
+            </tr>
+            <tr>
+              <td class="fname" data-path="SOPs/SOP_annealing_v2.pdf">SOPs/SOP_annealing_v2.pdf <span class="tag">CRITICAL</span></td>
+              <td class="type">PDF</td>
+              <td class="size">520 KB</td>
+              <td class="small-muted">2025-04-02 11:02</td>
+            </tr>
+            <tr>
+              <td class="fname" data-path="inventory/inventory_snapshot_2025-08.csv">inventory/inventory_snapshot_2025-08.csv</td>
+              <td class="type">CSV</td>
+              <td class="size">18 KB</td>
+              <td class="small-muted">2025-08-01 07:35</td>
+            </tr>
+            <tr>
+              <td class="fname" data-path="passwords_hint.txt">passwords_hint.txt</td>
+              <td class="type">TXT</td>
+              <td class="size">512 B</td>
+              <td class="small-muted">2025-08-14 09:12</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="footer" style="margin-top:12px">
+          <div class="actions">
+            <button class="btn" id="download-zip">Download (simulated)</button>
+            <button class="btn" id="extract-sample">Extract recipe_A</button>
+          </div>
+          <div style="margin-left:auto;text-align:right">
+            <div class="small-muted">Entries: <strong>14</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="preview" id="preview">
+          <h3>Preview — click a filename to view</h3>
+          <pre id="preview-content">
+Filename: readme.txt
+
+This is a simulated bench_backup archive created for internal documentation and process continuity.
+Structure:
+ - recipes/
+ - equipment_logs/
+ - calibration/
+ - batch_reports/
+ - SOPs/
+ - inventory/
+ - photos/
+
+DO NOT USE THIS FILE FOR PRODUCTION. For real restores, contact process-support@fab.local
+          </pre>
+        </div>
+
+        <div style="margin-top:10px;display:flex;align-items:center;gap:12px">
+          <div class="small-muted">Archive comment:</div>
+          <div style="flex:1;color:#cbd5e1">"End-of-week backup after shift B. Includes latest oven logs and BR-2025-0813-01"</div>
+        </div>
+
+        <div style="margin-top:8px;display:flex;gap:8px;align-items:center">
+          <div class="small-muted">Archive checksum:</div>
+          <div class="checksum">b7f3c9a1f6e8a2d4c63fa2b3c5a8e1d9f0c12345</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:12px;color:var(--muted);font-size:13px">
+      <strong>Notes:</strong> This page is a fake representation of an archive. Filenames and contents are synthetic and safe for training / simulation purposes.
+    </div>
+  </div>
+
+  <script>
+    // Simple preview mapping (fake contents)
+    const PREVIEWS = {
+      "readme.txt": `README — bench_backup.zip
+
+Archive: bench_backup.zip
+Path: /mnt/bench/
+Created by: backup-scheduler (cron)
+Date: 2025-08-14 09:12:43 CDT
+
+Contents include process recipes, equipment logs, calibration sheets, and last batch report.
+For restore procedures, follow SOP_restore_v1.2 (not included).`,
+
+      "recipes/recipe_A_v3.2.proc": `# Recipe: A v3.2
+Sequence:
+1) Ramp to 200C @ 5C/min
+2) Hold 30 min
+3) Cool to 50C @ 3C/min
+Notes: Use lot-specific pre-bake; do not exceed ramp rate for thin wafers.
+Author: J. Morales`,
+
+      "equipment_logs/oven_01_2025-08-13.log": `[2025-08-13 06:00] Oven01 INIT
+[2025-08-13 06:10] Setpoint 200C reached
+[2025-08-13 07:12] Alarm: sensor drift (0.8C) — auto-calibration triggered
+[2025-08-13 07:14] Auto-calibration complete
+[2025-08-13 11:02] Run complete — BR-2025-0813-01`,
+
+      "calibration/calib_2025-08-01.xlsx": `Spreadsheet: Calibration 2025-08
+(Preview)
+Sensor, Offset, Slope
+Therm_01, 0.12, 0.998
+Therm_02, -0.03, 1.002
+Pressure_01, 0.00, 1.000`,
+
+      "batch_reports/BR-2025-0813-01.pdf": `Batch Report BR-2025-0813-01
+Status: PASSED (minor rework)
+Yield: 98.4%
+Notes: Minor delamination observed on Sample C - investigate adhesion layer in next run.`,
+
+      "SOPs/SOP_annealing_v2.pdf": `SOP: Annealing v2.0
+Scope: Describes safe annealing procedures and acceptance criteria.
+Revision: 2025-03-29
+Author: Process Engineering`,
+
+      "passwords_hint.txt": `password_hint:
+"petname + gradyear"  (example: fluffy2016)
+(This hint belonged to user 'm.reed')`,
+
+      "inventory/inventory_snapshot_2025-08.csv": `Item,Qty,Location
+SiWafers-200mm,120,STORAGE-A
+Adhesive-X,12kg,STORAGE-B`,
+
+      "photos/bench_before_08132025.jpg": `-- binary image -- (photo of bench; preview not available in this simulation)`,
+    };
+
+    // Wire up clicks
+    document.querySelectorAll('.fname').forEach(td=>{
+      td.addEventListener('click', ()=>{
+        const path = td.getAttribute('data-path') || td.textContent.trim();
+        const filename = path.replace(/^\/|\/$/g,'');
+        const key = path.replace(/\s+/g,'');
+        const preview = PREVIEWS[path] || PREVIEWS[filename] || ("No preview available for " + filename);
+        document.getElementById('preview-content').textContent = "Filename: " + filename + "\\n\\n" + preview;
+      });
+    });
+
+    document.getElementById('download-zip').addEventListener('click', ()=>{
+      // Simulated download: create a small text file named bench_backup_simulated.zip
+      const blob = new Blob(["This is a simulated bench_backup.zip placeholder. For training only."], {type:'application/zip'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'bench_backup_simulated.zip';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    });
+
+    document.getElementById('extract-sample').addEventListener('click', ()=>{
+      const content = PREVIEWS['recipes/recipe_A_v3.2.proc'];
+      alert('Extracted recipes/recipe_A_v3.2.proc —\\n\\n' + content.slice(0,240) + '...\\n\\n(Extraction simulated)');
+    });
+  </script>
+</body>
+</html>
