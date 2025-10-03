@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CoreFab Vendor Docs Portal</title>
+  <style>
+    :root{
+      --bg:#f4f7fb; --card:#fff; --muted:#6b7280; --accent:#0f62fe;
+      --shell-shadow: 0 10px 30px rgba(12, 30, 60, 0.06);
+      font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+    body { margin:0; background:var(--bg); color:#0b1220; -webkit-font-smoothing:antialiased; }
+    .wrap { max-width:1100px; margin:28px auto; display:grid; grid-template-columns:260px 1fr; gap:20px; padding:0 16px; }
+    .sidebar { background:var(--card); border-radius:10px; padding:18px; box-shadow:var(--shell-shadow); border:1px solid #e8eef8; }
+    .brand { display:flex; gap:12px; align-items:center; margin-bottom:12px; }
+    .logo { width:46px; height:46px; border-radius:8px; background:linear-gradient(135deg,#0f62fe,#7c3aed); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:700; }
+    .nav { margin-top:8px; }
+    .nav a { display:block; padding:8px 10px; color:var(--muted); text-decoration:none; border-radius:6px; margin-bottom:6px; font-size:14px; }
+    .nav a:hover { background:#f1f6ff; color:#0b1220; }
+    .search { margin-top:12px; }
+    .search input { width:100%; padding:10px 12px; border-radius:8px; border:1px solid #e6eef8; font-size:14px; }
+
+    .main { background:var(--card); border-radius:10px; padding:22px; box-shadow:var(--shell-shadow); border:1px solid #e8eef8; }
+    .header { display:flex; align-items:center; gap:14px; margin-bottom:14px; }
+    .title { font-size:20px; font-weight:700; }
+    .subtitle { color:var(--muted); font-size:13px; margin-top:2px; }
+
+    .filters { display:flex; gap:8px; margin-top:10px; margin-bottom:18px; flex-wrap:wrap; }
+    .chip { padding:8px 10px; border-radius:8px; background:#fbfdff; border:1px solid #eef5ff; font-weight:600; font-size:13px; color:var(--accent); cursor:pointer; }
+    .list { display:grid; gap:12px; }
+    .doc { display:flex; align-items:center; justify-content:space-between; padding:12px; border-radius:8px; border:1px dashed #eef5fb; background:#fff; }
+    .meta { display:flex; gap:12px; align-items:center; }
+    .doc .icon { width:44px; height:44px; border-radius:6px; background:#f4f8ff; display:flex; align-items:center; justify-content:center; font-weight:700; color:var(--accent); }
+    .doc h4 { margin:0; font-size:15px; }
+    .doc p { margin:0; color:var(--muted); font-size:13px; }
+    .actions { display:flex; gap:8px; align-items:center; }
+    .btn { padding:8px 12px; border-radius:8px; text-decoration:none; font-weight:700; font-size:13px; background:var(--accent); color:#fff; border:none; cursor:pointer; }
+    .btn.secondary { background:#fff; color:var(--accent); border:1px solid #e6eef8; }
+    .small { font-size:12px; color:var(--muted); }
+
+    footer.portal-foot { margin-top:18px; font-size:12px; color:var(--muted); }
+    @media (max-width:880px) {
+      .wrap { grid-template-columns:1fr; }
+      .sidebar { order:2; }
+      .main { order:1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap" role="main" aria-label="Vendor documentation portal">
+    <aside class="sidebar" aria-label="Navigation">
+      <div class="brand">
+        <div class="logo">CF</div>
+        <div>
+          <div style="font-weight:700">CoreFab Vendor Portal</div>
+          <div class="small">Partner docs & resources</div>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Main navigation">
+        <a href="#getting-started">Getting Started</a>
+        <a href="#datasheets">Datasheets</a>
+        <a href="#integrations">Integrations & APIs</a>
+        <a href="#certs">Certs & Compliance</a>
+        <a href="#support">Support & Contacts</a>
+      </nav>
+
+      <div class="search" style="margin-top:12px;">
+        <input id="q" placeholder="Search docs, e.g., LITHO-118 manual" aria-label="Search documentation" />
+      </div>
+
+      <div style="margin-top:12px;">
+        <div style="font-size:13px; color:var(--muted); margin-bottom:6px;">Quick links</div>
+        <a href="#" onclick="alert('Opening: onboarding_checklist.pdf (placeholder)'); return false;">Onboarding Checklist</a>
+        <a href="#" onclick="alert('Opening: vendor_roster.csv (placeholder)'); return false;">Approved Vendor Roster</a>
+      </div>
+    </aside>
+
+    <section class="main" aria-label="Documentation list">
+      <div class="header">
+        <div>
+          <div class="title">Vendor Documentation</div>
+          <div class="subtitle">Search and download technical manuals, datasheets, and support guides.</div>
+        </div>
+      </div>
+
+      <div class="filters" role="toolbar" aria-label="Filters">
+        <div class="chip" data-filter="all">All</div>
+        <div class="chip" data-filter="manual">Manuals</div>
+        <div class="chip" data-filter="datasheet">Datasheets</div>
+        <div class="chip" data-filter="safety">Safety</div>
+        <div class="chip" data-filter="api">API</div>
+      </div>
+
+      <div id="docs" class="list" aria-live="polite">
+        <article class="doc" data-type="manual">
+          <div class="meta">
+            <div class="icon">PDF</div>
+            <div>
+              <h4>Maintenance Manual — LITHO-118</h4>
+              <p class="small">Revision 3 · 2025 · 48 pages · Bay B2</p>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn" onclick="alert('Download: LITHO-118_Maintenance_Rev3.pdf (placeholder)')">Download</button>
+            <button class="btn secondary" onclick="alert('View online: LITHO-118_Maintenance_Rev3.pdf (placeholder)')">View</button>
+          </div>
+        </article>
+
+        <article class="doc" data-type="datasheet">
+          <div class="meta">
+            <div class="icon">XLS</div>
+            <div>
+              <h4>Tool Spec Sheet — ETCH-204</h4>
+              <p class="small">Spec & tolerances · 2024 · 1.2 MB</p>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn" onclick="alert('Download: ETCH-204_Specs.xlsx (placeholder)')">Download</button>
+            <button class="btn secondary" onclick="alert('View online: ETCH-204_Specs.xlsx (placeholder)')">View</button>
+          </div>
+        </article>
+
+        <article class="doc" data-type="api">
+          <div class="meta">
+            <div class="icon">MD</div>
+            <div>
+              <h4>API Integration Guide — CoreFab Inventory API</h4>
+              <p class="small">Includes sample requests, auth, and rate limits</p>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn" onclick="alert('Open: inventory_api_guide.md (placeholder)')">Open</button>
+            <button class="btn secondary" onclick="alert('Copy: curl examples (placeholder)')">Copy Example</button>
+          </div>
+        </article>
+
+        <article class="doc" data-type="safety">
+          <div class="meta">
+            <div class="icon">PDF</div>
+            <div>
+              <h4>Safety Checklist & PPE — Tooling</h4>
+              <p class="small">Required PPE, lockout procedures, and waste handling</p>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn" onclick="alert('Download: Safety_Checklist_Tooling.pdf (placeholder)')">Download</button>
+            <button class="btn secondary" onclick="alert('View: Safety_Checklist_Tooling.pdf (placeholder)')">View</button>
+          </div>
+        </article>
+
+        <article class="doc" data-type="manual">
+          <div class="meta">
+            <div class="icon">PDF</div>
+            <div>
+              <h4>Quickstart — IMPL-076 Tooling</h4>
+              <p class="small">Operator quickstart, common error codes</p>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn" onclick="alert('Download: IMPL-076_Quickstart.pdf (placeholder)')">Download</button>
+            <button class="btn secondary" onclick="alert('View online: IMPL-076_Quickstart.pdf (placeholder)')">View</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="portal-foot">
+        <div><strong>Need help?</strong> Contact vendor-support@corefab.example or call +1 (555) 732-1010.</div>
+        <div style="margin-top:8px; color:var(--muted);">Portal last updated: Oct 1, 2025</div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Lightweight client-side search & filter for the static demo
+    const chips = document.querySelectorAll('.chip');
+    const docs = Array.from(document.querySelectorAll('.doc'));
+    const q = document.getElementById('q');
+
+    chips.forEach(c => c.addEventListener('click', () => {
+      const f = c.getAttribute('data-filter');
+      filterDocs(f);
+    }));
+
+    q.addEventListener('input', () => {
+      const v = q.value.trim().toLowerCase();
+      searchDocs(v);
+    });
+
+    function filterDocs(filter) {
+      docs.forEach(d => {
+        const t = d.getAttribute('data-type');
+        if (filter === 'all' || filter === t) d.style.display = '';
+        else d.style.display = 'none';
+      });
+    }
+
+    function searchDocs(query) {
+      docs.forEach(d => {
+        const title = d.querySelector('h4').textContent.toLowerCase();
+        const meta = d.querySelector('.small').textContent.toLowerCase();
+        const match = title.includes(query) || meta.includes(query);
+        d.style.display = match ? '' : 'none';
+      });
+    }
+
+    // initial state
+    filterDocs('all');
+  </script>
+</body>
+</html>
