@@ -241,17 +241,17 @@ function MailApp() {
   const emails = [
     {
       id: 1,
-      subject: "Invoice Reminder",
-      from: "billing@vendor.com",
-      to: "employee@company.com",
-      path: `${process.env.PUBLIC_URL}/sim/files/invoice.html`,
+      subject: "Yield Variance Report",
+      from: "yield-ops@company.com",
+      to: "marcus.reed@company.com",
+      path: `${process.env.PUBLIC_URL}/sim/files/yield_variance.html`,
     },
     {
       id: 2,
-      subject: "Travel Itinerary",
-      from: "noreply@airline.com",
+      subject: "Tooling Maintenance Schedule",
+      from: "maintenance@company.com",
       to: "employee@company.com",
-      path: `${process.env.PUBLIC_URL}/sim/files/itinerary.html`,
+      path: `${process.env.PUBLIC_URL}/sim/files/tooling_maintanence.html`,
     },
     {
       id: 3,
@@ -269,10 +269,10 @@ function MailApp() {
     },
     {
       id: 5,
-      subject: "[Ext] RE: Monthly Data Transfer",
+      subject: "Concerning Behavior",
       from: "employee@company.com",
       to: "ared@northbridge.example",
-      path: `${process.env.PUBLIC_URL}/sim/files/email-data-transfer.html`,
+      path: `${process.env.PUBLIC_URL}/sim/files/supervisor_concern.html`,
     },
   ];
   const [selected, setSelected] = useState(emails[0]);
