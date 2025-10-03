@@ -329,7 +329,7 @@ function BrowserApp() {
     },
     {
       id: "Vendor",
-      title: "CoreFav Vendor Portal",
+      title: "CoreFab Vendor Portal",
       path: `${process.env.PUBLIC_URL}/sim/files/vendor_portal.html`,
     },
     {
