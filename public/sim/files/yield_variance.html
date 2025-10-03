@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Yield Variance Report — Email</title>
+  <style>
+    :root {
+      --bg:#f3f6fb;
+      --card:#ffffff;
+      --muted:#6b7280;
+      --accent:#0f62fe;
+      --danger:#dc2626;
+      --table-border:#e6edf6;
+      font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+
+    body {
+      margin:0;
+      padding:24px;
+      background:linear-gradient(180deg,var(--bg),#ffffff);
+      -webkit-font-smoothing:antialiased;
+      color:#0f172a;
+    }
+
+    .email-shell {
+      max-width:820px;
+      margin:0 auto;
+      background:var(--card);
+      border-radius:12px;
+      box-shadow:0 8px 30px rgba(15,23,42,0.06);
+      overflow:hidden;
+      border:1px solid #e8eef8;
+    }
+
+    header {
+      display:flex;
+      align-items:center;
+      gap:16px;
+      padding:20px 24px;
+      background:linear-gradient(90deg,#0b63ff22,#7c3aed10);
+    }
+
+    .logo {
+      width:56px;
+      height:56px;
+      border-radius:8px;
+      background:linear-gradient(135deg,#0f62fe,#7c3aed);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:white;
+      font-weight:700;
+      box-shadow:0 4px 12px rgba(12,45,80,0.06);
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    }
+
+    .hdr-txt { line-height:1; }
+    .company { font-size:14px; color:var(--muted); }
+    .subject { font-size:18px; font-weight:600; margin-top:4px; }
+
+    .meta {
+      display:flex;
+      gap:12px;
+      padding:16px 24px;
+      border-bottom:1px solid #f1f6fb;
+      align-items:center;
+      background:#fbfcff;
+    }
+
+    .meta .fromto { font-size:13px; color:var(--muted); }
+    .meta .date { margin-left:auto; font-size:13px; color:var(--muted); }
+
+    .content {
+      padding:22px 24px 28px;
+    }
+
+    .lead {
+      margin-bottom:12px;
+      font-size:14px;
+      color:#0b1220;
+    }
+
+    .summary {
+      background:#f8fbff;
+      border:1px solid #e6f0ff;
+      padding:12px;
+      border-radius:8px;
+      margin-bottom:16px;
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    table {
+      width:100%;
+      border-collapse:collapse;
+      margin-bottom:18px;
+      font-size:13px;
+    }
+
+    th, td {
+      text-align:left;
+      padding:10px 12px;
+      border-bottom:1px solid var(--table-border);
+    }
+
+    th {
+      background:#fbfdff;
+      font-weight:600;
+      color:#0b1220;
+      font-size:13px;
+    }
+
+    tr.warning td { background:#fff8f8; }
+    .pct-neg { color:var(--danger); font-weight:600; }
+    .pct-pos { color:green; font-weight:600; }
+
+    .notes {
+      font-size:13px;
+      color:var(--muted);
+      margin-bottom:16px;
+    }
+
+    .actions {
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .btn {
+      display:inline-block;
+      padding:10px 14px;
+      border-radius:8px;
+      text-decoration:none;
+      font-weight:600;
+      font-size:13px;
+    }
+    .btn-primary { background:var(--accent); color:#fff; }
+    .btn-ghost { background:#fff; border:1px solid #e1e8ff; color:var(--accent); }
+
+    .attachment {
+      margin-top:14px;
+      font-size:13px;
+    }
+
+    footer {
+      padding:14px 24px;
+      border-top:1px solid #f1f6fb;
+      background:#fbfdff;
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    .confidential { font-size:11px; color:#9aa3b2; margin-top:8px; }
+    @media (max-width:560px){
+      .meta { flex-direction:column; align-items:flex-start; gap:6px; }
+      .meta .date { margin-left:0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="email-shell" role="article" aria-label="Yield variance report email">
+    <header>
+      <div class="logo">AC</div>
+      <div class="hdr-txt">
+        <div class="company">Acme Semiconductor — Manufacturing Operations</div>
+        <div class="subject">Yield Variance Report: Week 39 — Action Required</div>
+      </div>
+    </header>
+
+    <div class="meta" aria-hidden="false">
+      <div class="fromto">
+        <strong>From:</strong> <span>yield-ops@acme-semi.com</span> &nbsp;&nbsp;
+        <strong>To:</strong> <span>fab-ops-team@acme-semi.com</span>
+      </div>
+      <div class="date">Tue, Sep 30 2025 · 09:18 AM CDT</div>
+    </div>
+
+    <div class="content">
+      <p class="lead">
+        Team — please find the yield variance summary for the production lines below. 3 lines show negative variance exceeding threshold (–2.0%). Immediate investigation recommended for Line A3 and Line B2.
+      </p>
+
+      <div class="summary">
+        <strong>Quick summary:</strong>
+        Average target yield: <strong>95.6%</strong>. Current average yield: <strong>93.1%</strong>.
+        Overall variance: <strong class="pct-neg">-2.5%</strong>. Estimated unit loss: <strong>4,760 wafers</strong> over the reporting period.
+      </div>
+
+      <table aria-describedby="yield-table-caption">
+        <caption id="yield-table-caption" style="caption-side:top; text-align:left; padding:8px 0; font-weight:600;">
+          Yield Variance by Process Line — Sept 22–28, 2025
+        </caption>
+        <thead>
+          <tr>
+            <th>Process Line</th>
+            <th>Target Yield</th>
+            <th>Actual Yield</th>
+            <th>Variance</th>
+            <th>Primary Issue</th>
+            <th>Action Owner</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="warning">
+            <td>Line A3</td>
+            <td>96.5%</td>
+            <td>92.1%</td>
+            <td class="pct-neg">-4.4%</td>
+            <td>Contamination spike — particle counts</td>
+            <td>J. Alvarez</td>
+          </tr>
+          <tr class="warning">
+            <td>Line B2</td>
+            <td>95.8%</td>
+            <td>93.0%</td>
+            <td class="pct-neg">-2.8%</td>
+            <td>Lot-to-lot process drift</td>
+            <td>S. Kim</td>
+          </tr>
+          <tr>
+            <td>Line C1</td>
+            <td>95.0%</td>
+            <td>94.6%</td>
+            <td class="pct-pos">+0.4%</td>
+            <td>Stable</td>
+            <td>A. Patel</td>
+          </tr>
+          <tr>
+            <td>Line D4</td>
+            <td>95.2%</td>
+            <td>95.0%</td>
+            <td class="pct-neg">-0.2%</td>
+            <td>Minor process variation</td>
+            <td>K. Rivera</td>
+          </tr>
+          <tr>
+            <td>Line E6</td>
+            <td>96.1%</td>
+            <td>92.8%</td>
+            <td class="pct-neg">-3.3%</td>
+            <td>Tool maintenance overdue</td>
+            <td>M. Chen</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="notes">
+        <strong>Notes:</strong> Values shown are aggregated by wafer start date. "Variance" = Actual − Target. Rows in red indicate variance > 2.0% (negative). Please consult the attached detailed CSV for per-lot breakdowns and historical trend charts.
+      </div>
+
+      <div class="actions" role="group" aria-label="Email actions">
+        <a class="btn btn-primary" href="#" onclick="alert('Open detailed report (placeholder)')">Open Detailed Report</a>
+        <a class="btn btn-ghost" href="#" onclick="alert('Download CSV (placeholder)')">Download CSV</a>
+      </div>
+
+      <div class="attachment">
+        <strong>Attachment:</strong>
+        <ul style="margin:6px 0 0 18px;">
+          <li><a href="#" onclick="alert('Download: yield_variance_week39.csv (placeholder)')">yield_variance_week39.csv</a> — 124 KB</li>
+          <li><a href="#" onclick="alert('Download: yield_trend_weekly.pdf (placeholder)')">yield_trend_weekly.pdf</a> — 820 KB</li>
+        </ul>
+      </div>
+    </div>
+
+    <footer>
+      <div><strong>Recommended immediate actions</strong></div>
+      <ol style="margin:6px 0 0 18px;">
+        <li>Quarantine suspect lots from Line A3 and run particle count audit (Owner: J. Alvarez)</li>
+        <li>Schedule preventative maintenance on Tool E6 before next lot (Owner: M. Chen)</li>
+        <li>Run root-cause comparison for B2 between lots 39-101 and 39-104 (Owner: S. Kim)</li>
+      </ol>
+
+      <div class="confidential">
+        Confidential — intended for internal use only. If you received this message in error, notify <a href="mailto:it-security@acme-semi.com">it-security@acme-semi.com</a> and delete the message.
+      </div>
+    </footer>
+  </div>
+
+  <!-- Optional small script to make download buttons non-functional placeholders -->
+  <script>
+    // Prevent navigation in static preview - placeholder behavior
+    document.querySelectorAll('a[href="#"]').forEach(a => {
+      a.addEventListener('click', e => { e.preventDefault(); });
+    });
+  </script>
+</body>
+</html>
