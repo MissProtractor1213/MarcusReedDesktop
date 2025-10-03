@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tooling Maintenance Schedule — Email</title>
+  <style>
+    body {
+      margin:0;
+      padding:24px;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background:#f3f6fb;
+      color:#0f172a;
+    }
+    .email {
+      max-width:820px;
+      margin:auto;
+      background:#fff;
+      border-radius:12px;
+      box-shadow:0 6px 20px rgba(0,0,0,0.08);
+      border:1px solid #e8edf5;
+      overflow:hidden;
+    }
+    header {
+      background:linear-gradient(90deg,#0062ff22,#6d28d910);
+      padding:18px 24px;
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+    .logo {
+      width:46px; height:46px; border-radius:6px;
+      background:linear-gradient(135deg,#0f62fe,#7c3aed);
+      color:#fff; font-weight:bold; font-size:18px;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .subject { font-size:18px; font-weight:600; }
+    .meta {
+      padding:14px 24px;
+      font-size:13px;
+      border-bottom:1px solid #f1f5fb;
+      background:#fafcff;
+    }
+    .meta strong { color:#111; }
+    .content { padding:22px 24px; font-size:14px; }
+    table {
+      width:100%; border-collapse:collapse; margin:16px 0;
+      font-size:13px;
+    }
+    th,td {
+      padding:10px 12px; border-bottom:1px solid #e9eef7;
+      text-align:left;
+    }
+    th { background:#f9fbff; font-weight:600; }
+    tr.overdue td { background:#fff5f5; color:#b91c1c; font-weight:600; }
+    .attachment { margin-top:12px; font-size:13px; }
+    .btn {
+      display:inline-block; margin-top:12px;
+      background:#0f62fe; color:#fff; text-decoration:none;
+      padding:8px 14px; border-radius:6px; font-size:13px;
+      font-weight:600;
+    }
+    footer {
+      padding:14px 24px;
+      background:#fafcff;
+      border-top:1px solid #f1f5fb;
+      font-size:12px; color:#6b7280;
+    }
+  </style>
+</head>
+<body>
+  <div class="email">
+    <header>
+      <div class="logo">MT</div>
+      <div>
+        <div class="subject">Upcoming Tooling Maintenance Schedule</div>
+        <div style="font-size:13px; color:#6b7280;">Acme Semiconductor — Facilities Engineering</div>
+      </div>
+    </header>
+
+    <div class="meta">
+      <div><strong>From:</strong> maintenance@acme-semi.com</div>
+      <div><strong>To:</strong> fab-ops-team@acme-semi.com</div>
+      <div><strong>Date:</strong> Wed, Oct 1 2025 · 07:45 AM CDT</div>
+    </div>
+
+    <div class="content">
+      <p>
+        Please review the scheduled maintenance tasks for the upcoming week. 
+        Tools listed as <span style="color:#b91c1c;font-weight:600;">overdue</span> require immediate attention. 
+        Affected production lines should plan for downtime accordingly.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Tool ID</th>
+            <th>Location</th>
+            <th>Scheduled Date</th>
+            <th>Last Service</th>
+            <th>Status</th>
+            <th>Assigned Engineer</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="overdue">
+            <td>ETCH-204</td>
+            <td>Bay A3</td>
+            <td>Sep 28, 2025</td>
+            <td>Jun 30, 2025</td>
+            <td>Overdue</td>
+            <td>R. Lopez</td>
+          </tr>
+          <tr>
+            <td>LITHO-118</td>
+            <td>Bay B2</td>
+            <td>Oct 2, 2025</td>
+            <td>Jul 10, 2025</td>
+            <td>On Schedule</td>
+            <td>M. Chen</td>
+          </tr>
+          <tr>
+            <td>IMPL-076</td>
+            <td>Bay D1</td>
+            <td>Oct 4, 2025</td>
+            <td>Aug 15, 2025</td>
+            <td>Planned</td>
+            <td>A. Patel</td>
+          </tr>
+          <tr>
+            <td>FURN-332</td>
+            <td>Bay E6</td>
+            <td>Oct 6, 2025</td>
+            <td>Jul 22, 2025</td>
+            <td>Planned</td>
+            <td>S. Kim</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        Detailed maintenance checklists and safety procedures are attached for reference.
+      </p>
+
+      <a class="btn" href="#" onclick="alert('Download maintenance_schedule_week40.pdf (placeholder)')">Download PDF Schedule</a>
+
+      <div class="attachment">
+        <strong>Attachments:</strong>
+        <ul>
+          <li><a href="#" onclick="alert('Download: maintenance_schedule_week40.pdf')">maintenance_schedule_week40.pdf</a> — 412 KB</li>
+          <li><a href="#" onclick="alert('Download: tool_checklist.xlsx')">tool_checklist.xlsx</a> — 88 KB</li>
+        </ul>
+      </div>
+    </div>
+
+    <footer>
+      This message is intended for internal use by Facilities Engineering and Manufacturing Ops. 
+      If received in error, please contact <a href="mailto:it-support@acme-semi.com">it-support@acme-semi.com</a>.
+    </footer>
+  </div>
+</body>
+</html>
